@@ -3,15 +3,13 @@ from bs4 import BeautifulSoup
 import os 
 def extract_product_info() :
     print("Extracting product info...")
-    product_category = ["CPU", "Coolers","Motherboard","RAM", "Storage", "Graphics Card", "Power Supply", "Casing", "Monitors", "Casing Cooler", "Keyboard", "Mouse", "Anti Virus","Headphone","UPS"]
+    product_category = ["CPU", "Coolers","Motherboard","RAM", "Storage", "Graphics Card", "Power Supply", "Casing", "Monitors", "Casing Cooler", "Keyboard", "Mouse", "Anti Virus","Headphone","UPS","Laptop"]
     category_no = 0
     products = {'product name': [],'product category':[] ,'product price': []}
     while True: 
         product_no = 1
         file_path = f"products/{category_no}-{product_no}.html"
-        if category_no == 2:
-            category_no += 1
-            continue
+        
         if not os.path.exists(file_path):
             break
         while True:
@@ -24,7 +22,10 @@ def extract_product_info() :
                 try:
                     product_price = soup.find("span", class_="price-new").text.strip()
                 except AttributeError:
-                    product_price = soup.find("div", class_="price space-between").span.text.strip()
+                    if category_no == 15 or category_no == 2:
+                        product_price = soup.find("div", class_="p-item-price").text.strip()
+                    else:
+                        product_price = soup.find("div", class_="price space-between").span.text.strip()
                 products["product name"].append(product_name)  
                 products["product category"].append(product_category[category_no])
                 products["product price"].append(product_price)
