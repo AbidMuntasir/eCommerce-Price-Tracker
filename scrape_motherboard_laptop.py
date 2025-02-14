@@ -5,12 +5,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+import sys
 def scrape_motherboard_laptop(product):
     print(f"Scraping {product}...")
     chrome_options = Options()
     chrome_options.add_argument("--headless")  
-    chrome_options.add_argument("--disable-gpu")  
-    service_instance = Service(executable_path="chromedriver.exe")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox") 
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    # Determine the correct ChromeDriver path based on the OS
+    if sys.platform == "win32":  
+        service_instance = Service(executable_path="chromedriver.exe")  # Windows
+    else:
+        service_instance = Service(executable_path="/usr/local/bin/chromedriver")  # Linux (GitHub Actions)
+    
     driver = webdriver.Chrome(service=service_instance,options=chrome_options)
     driver.set_window_size(1366, 768)
     if product == 'motherboard':
