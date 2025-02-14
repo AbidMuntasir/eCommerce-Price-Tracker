@@ -5,7 +5,7 @@ def extract_product_info() :
     print("Extracting product info...")
     product_category = ["CPU", "Coolers","Motherboard","RAM", "Storage", "Graphics Card", "Power Supply", "Casing", "Monitors", "Casing Cooler", "Keyboard", "Mouse", "Anti Virus","Headphone","UPS","Laptop"]
     category_no = 0
-    products = {'product name': [],'product category':[] ,'product price': []}
+    products = {'product name': [],'product category':[] ,'product price': [], 'product link': [], 'product image': []}
     while True: 
         product_no = 1
         file_path = f"products/{category_no}-{product_no}.html"
@@ -18,6 +18,8 @@ def extract_product_info() :
                     html_content = file.read()  # Read file content
                 soup = BeautifulSoup(html_content, "html.parser")
                 product_name = soup.find("img").get("alt")
+                product_link = soup.find("a").get("href")
+                product_image = soup.find("img").get("src")
         
                 try:
                     product_price = soup.find("span", class_="price-new").text.strip()
@@ -26,10 +28,14 @@ def extract_product_info() :
                         product_price = soup.find("div", class_="p-item-price").text.strip()
                     else:
                         product_price = soup.find("div", class_="price space-between").span.text.strip()
+                
                 products["product name"].append(product_name)  
                 products["product category"].append(product_category[category_no])
                 products["product price"].append(product_price)
+                products["product link"].append(product_link)
+                products["product image"].append(product_image)
                 product_no += 1
+            
             except FileNotFoundError:
                 category_no += 1
                 break
