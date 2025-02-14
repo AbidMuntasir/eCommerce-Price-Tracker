@@ -1,0 +1,25 @@
+name: Run Price Tracker Daily
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+
+  workflow_dispatch:  # Allows manual execution if needed
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # Uses a Linux virtual machine
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3  # Clones your repo
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # Use Python 3.10 (change if needed)
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt  # Install necessary libraries
+
+      - name: Run the Price Tracker Script
+        run: python run_scripts.py  # Runs your main script
