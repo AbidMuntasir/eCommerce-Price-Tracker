@@ -1,4 +1,4 @@
-# 📌 eCommerce Price Tracker
+#  eCommerce Price Tracker
 
 An automated price tracker that scrapes product information from the **Startech** website, tracks price changes, display newly added products and displays the data on an interactive dashboard.
 
@@ -91,7 +91,7 @@ Run the Streamlit app to visualize price trends.
 streamlit run dashboard.py
 ```
 
-📌 **Dashboard Link:** *[Insert Link Here]* (If available, consider adding a link to a live demo or hosted dashboard to improve usability.)
+📌 **Dashboard Link:** [Startech Price Tracker](<https://startech-price-tracker.streamlit.app//>)
 
 ---
 
@@ -113,14 +113,14 @@ pip install pandas selenium beautifulsoup4 streamlit
 
 ---
 
-## 📜 License
+## **License**
 
-This project is licensed under the **MIT License**.
-
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
 ---
+## **Contact**
+For inquiries or collaboration:
+- **Email**: abidmuntasir.am@gmail.com
+- **GitHub**: [AbidMuntasir](https://github.com/AbidMuntasir)
 
-## 📬 Contact
-
-For any questions or collaboration opportunities, feel free to reach out via email: **abidmuntasir.am@gmail.com**
 
 
