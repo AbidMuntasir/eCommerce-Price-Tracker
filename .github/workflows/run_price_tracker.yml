@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'  # Runs daily at midnight UTC
 
-  workflow_dispatch:  # Allows manual execution if needed
+  workflow_dispatch:  # Allows manual execution
 
 jobs:
   run-script:
@@ -16,10 +16,26 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'  # Use Python 3.10 (change if needed)
+          python-version: '3.12'  # Choose the Python version
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt  # Install necessary libraries
+        run: pip install -r requirements.txt  # Installs dependencies
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable  # Install Chrome
+
+      - name: Install ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          wget "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver  # Install ChromeDriver
 
       - name: Run the Price Tracker Script
-        run: python run_scripts.py  # Runs your main script
+        env:
+          DISPLAY: ":99"  # Required for headless mode
+        run: python run_scripts.py  # Runs your Selenium script
