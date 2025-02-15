@@ -13,10 +13,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up ChromeDriver
-        uses: nanasess/setup-chromedriver@v2
+        uses: nanasess/setup-chromedriver@v2.2.2
         #with:
           # Optional: specify a specific ChromeDriver version if needed
-          # chromedriver-version: '88.0.4324.96'
+             
           # Optional: specify the Chrome binary name if different
           # chromeapp: chrome
 
@@ -25,3 +25,14 @@ jobs:
 
       - name: Run the Price Tracker Script
         run: python run_scripts.py
+
+      - name: Commit Scraped Files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Auto-update scraped products"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
