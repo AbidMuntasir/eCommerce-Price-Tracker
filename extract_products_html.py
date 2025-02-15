@@ -42,8 +42,16 @@ def scrape_product_html():
                 nxt_pg.click()
             except:
                 break
-        main_page_click  = driver.find_element(By.LINK_TEXT, "PC Builder")
-        main_page_click.click()
+        
+        main_page_click = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.LINK_TEXT, "PC Builder"))
+            )
+        
+        try:
+            main_page_click.click()
+        except:
+            print("Click was intercepted, trying JavaScript click instead...")
+            driver.execute_script("arguments[0].click();", main_page_click)
         category_no += 1
     
     driver.quit()
