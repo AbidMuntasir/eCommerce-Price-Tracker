@@ -28,12 +28,13 @@ jobs:
 
       - name: Install ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
-          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          chmod +x /usr/local/bin/chromedriver  # Install ChromeDriver
+            CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
+            echo "Detected Chrome version: $CHROME_VERSION"
+            wget -q "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_VERSION.0/linux64/chromedriver-linux64.zip" -O chromedriver.zip
+            unzip chromedriver.zip
+            sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+            sudo chmod +x /usr/local/bin/chromedriver
+
 
       - name: Run the Price Tracker Script
         env:
