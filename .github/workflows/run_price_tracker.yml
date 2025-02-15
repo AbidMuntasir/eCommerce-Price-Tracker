@@ -14,9 +14,9 @@ jobs:
 
       - name: Set up ChromeDriver
         uses: nanasess/setup-chromedriver@v2.2.2
-        with:
+        #with:
           # Optional: specify a specific ChromeDriver version if needed
-             chromedriver-version: '88.0.4324.96'
+             
           # Optional: specify the Chrome binary name if different
           # chromeapp: chrome
 
