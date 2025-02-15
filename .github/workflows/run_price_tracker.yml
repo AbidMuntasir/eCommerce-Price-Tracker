@@ -3,7 +3,7 @@ name: Run Price Tracker Daily
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs daily at midnight UTC
-  workflow_dispatch:  # Allows manual execution
+  workflow_dispatch:      # Allows manual execution
 
 jobs:
   run-script:
@@ -11,14 +11,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }} # Uses the PAT stored in secrets
 
       - name: Set up ChromeDriver
-        uses: nanasess/setup-chromedriver@v2.2.2
-        #with:
-          # Optional: specify a specific ChromeDriver version if needed
-             
-          # Optional: specify the Chrome binary name if different
-          # chromeapp: chrome
+        uses: nanasess/setup-chromedriver@v2
 
       - name: Install Dependencies
         run: pip install -r requirements.txt
@@ -26,12 +23,14 @@ jobs:
       - name: Run the Price Tracker Script
         run: python run_scripts.py
 
-      - name: Commit Scraped Files
+      - name: Commit and Push Changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-            git config --global user.name "GitHub Actions"
-            git config --global user.email "github-actions@github.com"
-            git add .
-            git commit -m "Auto-update scraped products" || echo "No changes to commit"
-            git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/AbidMuntasir/eCommerce-Price-Tracker.git HEAD:main
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Auto-update scraped products" || echo "No changes to commit"
+          git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git HEAD:main
 
 
