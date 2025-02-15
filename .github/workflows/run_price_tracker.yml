@@ -3,39 +3,25 @@ name: Run Price Tracker Daily
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs daily at midnight UTC
-
   workflow_dispatch:  # Allows manual execution
 
 jobs:
   run-script:
-    runs-on: ubuntu-latest  # Uses a Linux virtual machine
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3  # Clones your repo
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'  # Choose the Python version
+      - name: Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+        #with:
+          # Optional: specify a specific ChromeDriver version if needed
+          # chromedriver-version: '88.0.4324.96'
+          # Optional: specify the Chrome binary name if different
+          # chromeapp: chrome
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt  # Installs dependencies
-
-      - name: Install Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable  # Install Chrome
-
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
-          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          chmod +x /usr/local/bin/chromedriver  # Install ChromeDriver
+        run: pip install -r requirements.txt
 
       - name: Run the Price Tracker Script
-        env:
-          DISPLAY: ":99"  # Required for headless mode
-        run: python run_scripts.py  # Runs your Selenium script
+        run: python run_scripts.py
