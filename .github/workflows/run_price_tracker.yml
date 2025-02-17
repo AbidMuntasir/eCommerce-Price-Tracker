@@ -2,7 +2,7 @@ name: Run Price Tracker Daily
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+    - cron: '0 18 * * *'  # Runs daily at 6 am  UTC
   workflow_dispatch:      # Allows manual execution
 
 jobs:
