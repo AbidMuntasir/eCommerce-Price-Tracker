@@ -115,6 +115,7 @@ pip install pandas selenium beautifulsoup4 streamlit
 
 ## **License**
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+
 ---
 ## **Contact**
 For inquiries or collaboration:
