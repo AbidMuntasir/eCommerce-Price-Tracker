@@ -19,6 +19,9 @@ def compare_price():
         price_change_df = merged_df[merged_df['product price'] < merged_df['product price_y']]
 
         price_change_df =price_change_df.rename(columns={'product price': 'new price', 'product price_y': 'old price'})
+
+        # Drop duplicate rows by link
+        price_change_df.drop_duplicates(subset='product link', keep='first', inplace=True)
         
         # Identify new products (where price_y is NaN)
         new_product_df = merged_df[merged_df['product price_y'].isna()]
@@ -26,6 +29,9 @@ def compare_price():
 
         # Drop the price_y column
         new_product_df.drop(columns=['product price_y'], inplace=True)
+
+        # Drop duplicate rows by link
+        new_product_df.drop_duplicates(subset='product link', keep='first', inplace=True)
 
     except FileNotFoundError:
         print('Yesterday.csv not found. No price change comparison possible.')
