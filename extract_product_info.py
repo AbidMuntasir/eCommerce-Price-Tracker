@@ -43,6 +43,7 @@ def extract_product_info() :
     products_df = pd.DataFrame(products)
     products_df["product price"] = products_df["product price"].str.replace("৳", "")
     products_df["product price"] = products_df["product price"].str.replace(",", "")
+    products_df.drop(products_df[products_df["product price"] == 'Sold Out'].index, inplace=True)
     products_df["product price"] = products_df["product price"].astype(int)
 
     if os.path.exists("data/today.csv"):
