@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import os 
 def extract_product_info() :
     print("Extracting product info...")
-    product_category = ["CPU", "Coolers","Motherboard","RAM", "Storage", "Graphics Card", "Power Supply", "Casing", "Monitors", "Casing Cooler", "Keyboard", "Mouse", "Anti Virus","Headphone","UPS","Laptop"]
+    product_category = ["CPU", "Coolers","Motherboard","RAM", "Storage", "Graphics Card", "Power Supply", "Casing", "Monitors", "Casing Cooler", "Keyboard", "Mouse","Speaker","Headphones","LAN Cards" ,"Anti Virus","UPS","Laptop"]
     category_no = 0
     products = {'product name': [],'product category':[] ,'product price': [], 'product link': [], 'product image': []}
     while True: 
